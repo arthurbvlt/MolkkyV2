@@ -46,13 +46,37 @@ public class Main extends HttpServlet {
 			round.setScore(score);
 			round.setTotalScore(round.getTotalScore()+ score);
 			int nbRound = round.getNbRound();
-			//send db  ff
+			 
+			
+			if(round.getTotalScore() == 50) {
+				 game.setTeamWinner(round.getTeam());
+			}else if (round.getTotalScore() > 50) {
+				round.setTotalScore(round.getTotalScore()-25);
+			}
+			
+			if(round.getScore() == 0) {
+				round.setCountZero(round.getCountZero()+1);
+			}
+			
+			if(round.getCountZero() == 3) {
+				round.setCountZero(0);
+				round.setTotalScore(0);
+			}
+			
+			//send db 
+			
 			
 			if(game.getTeam1().getName().equals(round.getTeam().getName())) {
-				round = new Round(team2, game, 0, nbRound+1, 0, 0 );
+				round = new Round(team2, game, 0, 0,nbRound+1, 0 );
+				System.out.println("change team 1");
+			}else if(game.getTeam2().getName().equals(round.getTeam().getName())) {
+				round = new Round(team1, game, 0, 0,nbRound+1, 0 );
+				System.out.println("change team 2");
 			}
 			
 	     
+			
+			
 		if(!team1.getIsTurn()) {
 			team1.setScore(team1.getScore()+score) ;
 			
