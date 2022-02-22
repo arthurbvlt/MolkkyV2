@@ -63,9 +63,17 @@ public class Teams extends HttpServlet {
 					DaoFactory dao = DaoFactory.getInstance();
 					
 					dao.getTeamDao().ajouter(team1);
+					dao.getTeamDao().ajouter(team2);
+					
+					Integer id1 = dao.getTeamDao().getIdByName(team1.getName());
+					Integer id2 = dao.getTeamDao().getIdByName(team2.getName());
+					
+					team1.setId(id1);
+					team2.setId(id2);
 					
 					Game game = new Game(team1, team2, null, false);
 					
+					dao.getGameDao().create(game);
 					Round round = new Round(team1, game, 0, 0,1, 0);
 					
 					

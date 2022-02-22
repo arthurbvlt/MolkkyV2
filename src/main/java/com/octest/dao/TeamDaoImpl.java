@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.octest.beans.Team;
 
+
 public class TeamDaoImpl implements TeamDao {
     private DaoFactory daoFactory;
 
@@ -55,5 +56,35 @@ public class TeamDaoImpl implements TeamDao {
         }
         return teams;
     }
+
+	@Override
+	public Integer getIdByName(String name) {
+		Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet result = null;
+
+        try {
+        	 
+        	connection = daoFactory.getConnection();
+        	preparedStatement = connection.prepareStatement("SELECT id "
+        			+ "FROM team "
+        			+ "WHERE name = ? ;");
+        	preparedStatement.setString(1, name);  
+        	
+        	result =  preparedStatement.executeQuery();
+            // TODO deal with the idEstablishment
+
+           if(result.next()) {
+               int id = result.getInt("id");
+            
+        	   return id;
+           }else {
+        	   return null;
+           }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+		return null;
+	}
 
 }

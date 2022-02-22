@@ -2,7 +2,7 @@ package com.octest.beans;
 
 public class Team {
 	
-	
+	protected int id;
 	protected String name;
 	protected int score;
 	protected int turn;
@@ -30,6 +30,31 @@ public class Team {
 		this.isWinner = isWinner;
 		this.isTurn = isTurn;
 		this.countZero = countZero;
+	}
+
+
+
+	public Team(int id, String name, int score, int turn, boolean isWinner, boolean isTurn, int countZero) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.score = score;
+		this.turn = turn;
+		this.isWinner = isWinner;
+		this.isTurn = isTurn;
+		this.countZero = countZero;
+	}
+
+
+
+	public int getId() {
+		return id;
+	}
+
+
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 

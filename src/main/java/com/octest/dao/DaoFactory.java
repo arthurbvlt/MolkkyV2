@@ -23,7 +23,7 @@ public class DaoFactory {
         }
 
         DaoFactory instance = new DaoFactory(
-                "jdbc:mysql://localhost:3306/molkkyv2", "root", "");   // changement de mdp et id pour se connecter Zara ! 
+                "jdbc:mysql://localhost:3306/molkkyv2", "", "");   // changement de mdp et id pour se connecter Zara ! 
         return instance;
     }
 
@@ -31,8 +31,16 @@ public class DaoFactory {
         return DriverManager.getConnection(url, username, password);
     }
 
-    // Récupération du Dao
+    // Rï¿½cupï¿½ration du Dao
     public TeamDao getTeamDao() {
         return new TeamDaoImpl(this);
+    }
+    
+    public GameDao getGameDao() {
+    	return new GameDaoImpl(this);
+    }
+    
+    public RoundDao getRoundDao() {
+    	return new RoundDaoImpl(this);
     }
 }

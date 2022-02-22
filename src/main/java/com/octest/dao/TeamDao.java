@@ -7,4 +7,6 @@ import com.octest.beans.Team;
 public interface TeamDao {
     void ajouter( Team team );
     List<Team> lister();
+    
+    Integer getIdByName(String name);
 }
