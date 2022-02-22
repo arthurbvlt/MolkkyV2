@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.octest.beans.Game;
+import com.octest.beans.Round;
 import com.octest.beans.Team;
 
 @WebServlet("/Main")
@@ -34,10 +36,26 @@ public class Main extends HttpServlet {
 	     Team team1 = (Team) session.getAttribute("team1");
 	     Team team2 = (Team) session.getAttribute("team2");
 		
+	     Round round = (Round) request.getAttribute("round");
+	     
+	     Game game = round.getGame();
+	     
 	     int score = Integer.valueOf(request.getParameter("score"));
+	     
+	     	//new 
+			round.setScore(score);
+			round.setTotalScore(round.getTotalScore()+ score);
+			int nbRound = round.getNbRound();
+			//send db 
+			
+			if(game.getTeam1().getName().equals(round.getTeam().getName())) {
+				round = new Round(team2, game, 0, nbRound+1, 0, 0 );
+			}
+			
 	     
 		if(!team1.getIsTurn()) {
 			team1.setScore(team1.getScore()+score) ;
+			
 			team1.setTurn(team1.getTurn()+1);
 			if (score == 0){
 			 	team1.setCountZero(team1.getCountZero()+1);
@@ -107,9 +125,9 @@ public class Main extends HttpServlet {
 			}
 		}
 		
-		session.setAttribute("team1", team1);    //ça renvoie à la Servlet l'attribut team1
+		session.setAttribute("team1", team1);    //ï¿½a renvoie ï¿½ la Servlet l'attribut team1
 		session.setAttribute("team2", team2);
-		
+		request.setAttribute("round", round);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/main.jsp").forward(request, response);
 	
     }

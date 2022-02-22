@@ -2,6 +2,7 @@ package com.octest.beans;
 
 public class Team {
 	
+	
 	protected String name;
 	protected int score;
 	protected int turn;
@@ -13,7 +14,7 @@ public class Team {
 		super();
 		this.name = name;
 		this.score = 0;
-		this.turn = 0;
+		this.turn = 1;
 		this.isWinner = false;
 		this.isTurn = false;
 		this.countZero = 0;

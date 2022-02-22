@@ -22,9 +22,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.octest.beans.Game;
+import com.octest.beans.Round;
 import com.octest.beans.Team;
 //import com.opencsv.CSVReader;
-import com.opencsv.CSVReader;
 
 @WebServlet("/Teams")
 public class Teams extends HttpServlet {
@@ -48,18 +49,29 @@ public class Teams extends HttpServlet {
 		
     	HttpSession session = request.getSession();
 
-    	
+    	System.out.println("test"); 
 		if(request.getParameter("teams") != null ) {
 			if( request.getParameter("team1").toString() != "" && request.getParameter("team2").toString() !="") {
 				if(!request.getParameter("team1").toString().equals(request.getParameter("team2").toString())) {
+					
 					Team team1 = new Team(request.getParameter("team1").toString());
 					Team team2 = new Team(request.getParameter("team2").toString());
+					
+					Game game = new Game(team1, team2, null, false);
+					
+					Round round = new Round(team1, game, 0, 0,1, 0);
+					
 					
 					team1.setIsTurn(true);
 					  	
 			        session.setAttribute("team1", team1);
 			        session.setAttribute("team2", team2);
+			        session.setAttribute("game", game);
+			        
+			        request.setAttribute("round", round);
 			        request.setAttribute("isSame", false);
+			        
+			        
 					this.getServletContext().getRequestDispatcher("/WEB-INF/main.jsp").forward(request, response);
 				}
 				else {	
@@ -71,10 +83,10 @@ public class Teams extends HttpServlet {
 				this.getServletContext().getRequestDispatcher("/WEB-INF/teams.jsp").forward(request, response);
 			}
 		}else if (request.getParameter("teams") != "Lets Play" && getNomFichier(request.getPart("file")) != "") {
-			// On récupère le fichier dans part
+			// On rï¿½cupï¿½re le fichier dans part
 	        Part part = request.getPart("file");
 	            
-	        // On vérifie qu'on a bien reçu un fichier
+	        // On vï¿½rifie qu'on a bien reï¿½u un fichier
 	        String nomFichier = getNomFichier(part);
 			// Si on a bien un fichier
 			if (nomFichier != null && !nomFichier.isEmpty()) {
@@ -83,7 +95,7 @@ public class Teams extends HttpServlet {
 			     nomFichier = nomFichier.substring(nomFichier.lastIndexOf('/') + 1)
 			            .substring(nomFichier.lastIndexOf('\\') + 1);
 			
-			    // On écrit définitivement le fichier sur le disque
+			    // On ï¿½crit dï¿½finitivement le fichier sur le disque
 			    ecrireFichier(part, nomFichier, CHEMIN_FICHIERS);
 			    request.setAttribute(nomChamp, nomFichier);
 			}
