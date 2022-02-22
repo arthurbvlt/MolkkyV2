@@ -36,7 +36,7 @@ public class Main extends HttpServlet {
 	     Team team1 = (Team) session.getAttribute("team1");
 	     Team team2 = (Team) session.getAttribute("team2");
 		
-	     Round round = (Round) request.getAttribute("round");
+	     Round round = (Round) session.getAttribute("round");
 	     
 	     Game game = round.getGame();
 	     
@@ -46,7 +46,7 @@ public class Main extends HttpServlet {
 			round.setScore(score);
 			round.setTotalScore(round.getTotalScore()+ score);
 			int nbRound = round.getNbRound();
-			//send db 
+			//send db  ff
 			
 			if(game.getTeam1().getName().equals(round.getTeam().getName())) {
 				round = new Round(team2, game, 0, nbRound+1, 0, 0 );
@@ -127,7 +127,7 @@ public class Main extends HttpServlet {
 		
 		session.setAttribute("team1", team1);    //�a renvoie � la Servlet l'attribut team1
 		session.setAttribute("team2", team2);
-		request.setAttribute("round", round);
+		session.setAttribute("round", round);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/main.jsp").forward(request, response);
 	
     }

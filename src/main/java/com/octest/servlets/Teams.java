@@ -68,7 +68,7 @@ public class Teams extends HttpServlet {
 			        session.setAttribute("team2", team2);
 			        session.setAttribute("game", game);
 			        
-			        request.setAttribute("round", round);
+			        session.setAttribute("round", round);
 			        request.setAttribute("isSame", false);
 			        
 			        
