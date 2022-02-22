@@ -25,6 +25,8 @@ import java.util.List;
 import com.octest.beans.Game;
 import com.octest.beans.Round;
 import com.octest.beans.Team;
+
+import com.octest.dao.*;
 //import com.opencsv.CSVReader;
 
 @WebServlet("/Teams")
@@ -44,6 +46,7 @@ public class Teams extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
 		String nomUser = System.getProperty("user.name");
 		CHEMIN_FICHIERS = "C:/Users/"+ nomUser + "/Documents/"; 
 		
@@ -51,11 +54,15 @@ public class Teams extends HttpServlet {
 
     	System.out.println("test"); 
 		if(request.getParameter("teams") != null ) {
-			if( request.getParameter("team1").toString() != "" && request.getParameter("team2").toString() !="") {
-				if(!request.getParameter("team1").toString().equals(request.getParameter("team2").toString())) {
+			if( !"".equals(request.getParameter("team1")) && !"".equals(request.getParameter("team2"))) {
+				if(!request.getParameter("team1").equals(request.getParameter("team2"))) {
 					
 					Team team1 = new Team(request.getParameter("team1").toString());
 					Team team2 = new Team(request.getParameter("team2").toString());
+					
+					DaoFactory dao = DaoFactory.getInstance();
+					
+					dao.getTeamDao().ajouter(team1);
 					
 					Game game = new Game(team1, team2, null, false);
 					

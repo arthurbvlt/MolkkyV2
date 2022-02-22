@@ -12,7 +12,7 @@
 	</servlet> 
 	<servlet-mapping> 
 		<servlet-name>Teams</servlet-name> 
-		<url-pattern>/</url-pattern> 
+		<url-pattern>/teams</url-pattern> 
 	</servlet-mapping> 
   
   	<servlet> 
