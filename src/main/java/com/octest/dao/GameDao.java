@@ -6,6 +6,6 @@ public interface GameDao {
 	
 	void create(Game game);
 	
-	Game getById(int id);
+	Integer getIdByCode(String code);
 
 }

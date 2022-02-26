@@ -7,25 +7,31 @@ public class Game {
 	public Team team2;
 	public Team teamWinner;
 	public boolean isOver;
+	public String code;
 	
 	
-	public Game(Team team1, Team team2, Team teamWinner,boolean isOver) {
+	public Game(Team team1, Team team2, Team teamWinner,boolean isOver, String code) {
 		super();
 		this.team1 = team1;
 		this.team2 = team2;
 		this.teamWinner = teamWinner;
 		this.isOver = isOver;
+		this.code = code;
 	}
 	
 	
-	
-	public Game(int id, Team team1, Team team2, Team teamWinner,  boolean isOver) {
+
+
+
+
+	public Game(int id, Team team1, Team team2, Team teamWinner, boolean isOver, String code) {
 		super();
 		this.id = id;
 		this.team1 = team1;
 		this.team2 = team2;
 		this.teamWinner = teamWinner;
 		this.isOver = isOver;
+		this.code = code;
 	}
 
 

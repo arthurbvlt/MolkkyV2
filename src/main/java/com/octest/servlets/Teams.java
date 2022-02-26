@@ -71,11 +71,18 @@ public class Teams extends HttpServlet {
 					team1.setId(id1);
 					team2.setId(id2);
 					
-					Game game = new Game(team1, team2, null, false);
+					String code = generateCode(20);
+					Game game = new Game(team1, team2, null, false, code);
 					
 					dao.getGameDao().create(game);
-					Round round = new Round(team1, game, 0, 0,1, 0);
 					
+					Integer idGame = dao.getGameDao().getIdByCode(game.code);
+
+					game.setId(idGame);
+
+					Round round = new Round(team1, game, 0, 0, 1, 0);
+					
+					dao.getRoundDao().create(round);
 					
 					team1.setIsTurn(true);
 					  	
@@ -180,4 +187,31 @@ public class Teams extends HttpServlet {
         }
         return null;
     } 
+    
+    public String generateCode(int n)
+    {
+  
+        // chose a Character random from this String
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                    + "0123456789"
+                                    + "abcdefghijklmnopqrstuvxyz";
+  
+        // create StringBuffer size of AlphaNumericString
+        StringBuilder sb = new StringBuilder(n);
+  
+        for (int i = 0; i < n; i++) {
+  
+            // generate a random number between
+            // 0 to AlphaNumericString variable length
+            int index
+                = (int)(AlphaNumericString.length()
+                        * Math.random());
+  
+            // add Character one by one in end of sb
+            sb.append(AlphaNumericString
+                          .charAt(index));
+        }
+  
+        return sb.toString();
+    }
 }
