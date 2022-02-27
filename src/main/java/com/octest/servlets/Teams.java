@@ -74,8 +74,11 @@ public class Teams extends HttpServlet {
 					Game game = new Game(team1, team2, null, false);
 					
 					dao.getGameDao().create(game);
+					
+					
 					Round round = new Round(team1, game, 0, 0,1, 0);
 					
+					Round roundOld = new Round(team1, game, 0, 0,1, 0);
 					
 					team1.setIsTurn(true);
 					  	
@@ -85,7 +88,7 @@ public class Teams extends HttpServlet {
 			        
 			        session.setAttribute("round", round);
 			        request.setAttribute("isSame", false);
-			        
+			        request.setAttribute("roundOld", roundOld);
 			        
 					this.getServletContext().getRequestDispatcher("/WEB-INF/main.jsp").forward(request, response);
 				}

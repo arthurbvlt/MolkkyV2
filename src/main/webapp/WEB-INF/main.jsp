@@ -12,7 +12,7 @@
 <body>
 	<p>Lets play!</p>
 	<h2>
-		<c:out value="Equipe 1 :  ${ sessionScope.round.team.name }"></c:out>
+		<c:out value="Equipe à jouer :  ${ sessionScope.round.team.name }"></c:out>
 	</h2>
 	<h4>
 		<c:out value="Score  :  ${ sessionScope.round.score }"></c:out>
@@ -21,6 +21,15 @@
 		<c:out value="Turn  :  ${ sessionScope.round.nbRound}"></c:out>
 	</h4>
 	
+	<h2>
+		<c:out value="Equipe :  ${ roundOld.team.name }"></c:out>
+	</h2>
+	<h4>
+		<c:out value="Score  :  ${ roundOld.score }"></c:out>
+	</h4>
+	<h4>
+		<c:out value="Turn  :  ${ roundOld.nbRound}"></c:out>
+	</h4>
 		
 		<form  action="${pageContext.request.contextPath}/main"method="post">
 				
