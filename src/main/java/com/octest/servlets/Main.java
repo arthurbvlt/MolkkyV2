@@ -33,46 +33,46 @@ public class Main extends HttpServlet {
     	
     	HttpSession session = request.getSession();
 
-	     Team team1 = (Team) session.getAttribute("team1");
-	     Team team2 = (Team) session.getAttribute("team2");
+		Team team1 = (Team) session.getAttribute("team1");
+	    Team team2 = (Team) session.getAttribute("team2");
 		
-	     Round round = (Round) session.getAttribute("round");
-	     
-	     Game game = round.getGame();
-	     
-	     int score = Integer.valueOf(request.getParameter("score"));
-	     
-	     	//new 
-			round.setScore(score);
-			round.setTotalScore(round.getTotalScore()+ score);
-			int nbRound = round.getNbRound();
-			 
-			
-			if(round.getTotalScore() == 50) {
-				 game.setTeamWinner(round.getTeam());
-			}else if (round.getTotalScore() > 50) {
-				round.setTotalScore(round.getTotalScore()-25);
-			}
-			
-			if(round.getScore() == 0) {
-				round.setCountZero(round.getCountZero()+1);
-			}
-			
-			if(round.getCountZero() == 3) {
-				round.setCountZero(0);
-				round.setTotalScore(0);
-			}
+		Round round = (Round) session.getAttribute("round");
+		 
+		Game game = round.getGame();
+		 
+		int score = Integer.valueOf(request.getParameter("score"));
+    	System.out.println(score); 
+
+     	//new 
+		round.setScore(score);
+    	System.out.println(round.score + "----2"); 
+		round.setTotalScore(round.getTotalScore()+ score);
+		int nbRound = round.getNbRound();
+		 
+		
+		if(round.getTotalScore() == 50) {
+			 game.setTeamWinner(round.getTeam());
+		}else if (round.getTotalScore() > 50) {
+			round.setTotalScore(round.getTotalScore()-25);
+		}
+		
+		if(round.getScore() == 0) {
+			round.setCountZero(round.getCountZero()+1);
+		}
+		
+		if(round.getCountZero() == 3) {
+			round.setCountZero(0);
+			round.setTotalScore(0);
+		}
 			
 			//send db 
 			
 			
-			if(game.getTeam1().getName().equals(round.getTeam().getName())) {
-				round = new Round(team2, game, 0, 0,nbRound+1, 0 );
-				System.out.println("change team 1");
-			}else if(game.getTeam2().getName().equals(round.getTeam().getName())) {
-				round = new Round(team1, game, 0, 0,nbRound+1, 0 );
-				System.out.println("change team 2");
-			}
+		if(game.getTeam1().getName().equals(round.getTeam().getName())) {
+			round = new Round(team2, game, 0, 0,nbRound+1, 0 );
+		}else if(game.getTeam2().getName().equals(round.getTeam().getName())) {
+			round = new Round(team1, game, 0, 0,nbRound+1, 0 );
+		}
 			
 	     
 			

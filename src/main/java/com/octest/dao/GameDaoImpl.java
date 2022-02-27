@@ -2,6 +2,7 @@ package com.octest.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.octest.beans.Game;
@@ -23,10 +24,10 @@ public class GameDaoImpl implements GameDao{
 
 	        try {
 	            connexion = daoFactory.getConnection();
-	            preparedStatement = connexion.prepareStatement("INSERT INTO game(team1Id, team2Id, teamWinnerId) VALUES(?, ?, ?);");
+	            preparedStatement = connexion.prepareStatement("INSERT INTO game(team1Id, team2Id, code) VALUES(?, ?, ?);");
 	            preparedStatement.setInt(1, game.getTeam1().getId());
 	            preparedStatement.setInt(2, game.getTeam2().getId());
-	            preparedStatement.setInt(3, (Integer) null);
+	            preparedStatement.setString(3, game.code);
 
 	            preparedStatement.executeUpdate();
 	        } catch (SQLException e) {
@@ -36,10 +37,38 @@ public class GameDaoImpl implements GameDao{
 		
 	}
 
+
 	@Override
-	public Game getById(int id) {
-		// TODO Auto-generated method stub
+	public Integer getIdByCode(String code) {
+		Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet result = null;
+
+        try {
+        	 
+        	connection = daoFactory.getConnection();
+        	preparedStatement = connection.prepareStatement("SELECT id "
+        			+ "FROM game "
+        			+ "WHERE code = ? ;");
+        	preparedStatement.setString(1, code);  
+        	
+        	result =  preparedStatement.executeQuery();
+            // TODO deal with the idEstablishment
+
+           if(result.next()) {
+               int id = result.getInt("id");
+            
+        	   return id;
+           }else {
+        	   return null;
+           }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 		return null;
 	}
 
 }
+
+
+

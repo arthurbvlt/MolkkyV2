@@ -40,9 +40,8 @@
 			</h4>
 				<tr>
 					<td><c:out value="Add new Score" /></td>
-					<td><input type="text" name="score" /></td>
+					<td><input type="number" id="score" name="score" min="0" max="12" value="0"><br><br></td>
 				</tr>
-				<td colspan="3">
 			</table>
 			<input type="submit" name="main" value="Send score" />
 		</form>
