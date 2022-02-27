@@ -52,7 +52,6 @@ public class Teams extends HttpServlet {
 		
     	HttpSession session = request.getSession();
 
-    	System.out.println("test"); 
 		if(request.getParameter("teams") != null ) {
 			if( !"".equals(request.getParameter("team1")) && !"".equals(request.getParameter("team2"))) {
 				if(!request.getParameter("team1").equals(request.getParameter("team2"))) {
@@ -72,29 +71,30 @@ public class Teams extends HttpServlet {
 					team2.setId(id2);
 					
 					String code = generateCode(20);
+					
 					Game game = new Game(team1, team2, null, false, code);
 					
 					dao.getGameDao().create(game);
 					
-					
-					
-					Round roundOld = new Round(team1, game, 0, 0,1, 0);
-					
 					Integer idGame = dao.getGameDao().getIdByCode(game.code);
-
+					
 					game.setId(idGame);
-
+					
+					
+					
+					Round roundOld = new Round(team2, game, 0, 0,1, 0);
+			
 					Round round = new Round(team1, game, 0, 0, 1, 0);
 					
-					dao.getRoundDao().create(round);
+					//dao.getRoundDao().create(round);
 					
 					team1.setIsTurn(true);
 					  	
 			        session.setAttribute("team1", team1);
 			        session.setAttribute("team2", team2);
 			        session.setAttribute("game", game);
-			        
 			        session.setAttribute("round", round);
+			        
 			        request.setAttribute("isSame", false);
 			        request.setAttribute("roundOld", roundOld);
 			        

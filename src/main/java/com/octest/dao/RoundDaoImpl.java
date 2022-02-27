@@ -2,6 +2,7 @@ package com.octest.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.octest.beans.Game;
@@ -26,13 +27,12 @@ public class RoundDaoImpl implements RoundDao{
         try {
             connexion = daoFactory.getConnection();
             preparedStatement = connexion.prepareStatement("INSERT INTO round(gameId, currentTeamId, score, nbRound, countZero, totalScore) VALUES(?, ?, ?, ?, ?, ?);");
-            preparedStatement.setInt(1, round.game.getId());
-            preparedStatement.setInt(2, round.team.getId());
-        	System.out.println(round.score + "round.score"); 
-            preparedStatement.setInt(3, round.score);
-            preparedStatement.setInt(4, round.nbRound);
-            preparedStatement.setInt(5, round.countZero);
-            preparedStatement.setInt(6, round.totalScore);
+            preparedStatement.setInt(1, round.getGame().getId());
+            preparedStatement.setInt(2, round.getTeam().getId());
+            preparedStatement.setInt(3, round.getScore());
+            preparedStatement.setInt(4, round.getNbRound());
+            preparedStatement.setInt(5, round.getCountZero());
+            preparedStatement.setInt(6, round.getTotalScore());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -43,7 +43,47 @@ public class RoundDaoImpl implements RoundDao{
 	@Override
 	public Round getByNameAndGame(Game game, Team team) {
 		// TODO Auto-generated method stub
+		
+		//SELECT id FROM your_table WHERE id = (SELECT MAX(id) FROM your_table)
+		
+		Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet result = null;
+
+        try {
+        	 
+        	connection = daoFactory.getConnection();
+        	preparedStatement = connection.prepareStatement("SELECT * "
+        			+ "FROM round "
+        			+ "WHERE currentTeamId = ? AND gameId = ? ORDER BY nbRound DESC;");
+        	preparedStatement.setInt(1, team.getId());
+        	preparedStatement.setInt(2, game.getId());  
+        	
+        	
+        	result =  preparedStatement.executeQuery();
+            // TODO deal with the idEstablishment
+
+        	if(result.next()) {
+        	   
+        		   int id = result.getInt("id");
+                   int score = result.getInt("score");
+                   int nbRound = result.getInt("nbRound");
+                   int countZero = result.getInt("countZero");
+                   int totalScore = result.getInt("totalScore");
+                   
+                   
+                   Round round = new Round(id, team, game, score, totalScore, nbRound, countZero);
+                
+            	   return round;
+
+              
+           }else {
+        	   return null;
+           }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 		return null;
 	}
-
+	
 }

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import com.octest.beans.Game;
 import com.octest.beans.Round;
 import com.octest.beans.Team;
+import com.octest.dao.DaoFactory;
 
 @WebServlet("/Main")
 public class Main extends HttpServlet {
@@ -41,14 +42,23 @@ public class Main extends HttpServlet {
 		Game game = round.getGame();
 		 
 		int score = Integer.valueOf(request.getParameter("score"));
-    	System.out.println(score); 
 
+    	DaoFactory dao = DaoFactory.getInstance();
+    	
      	//new 
 		round.setScore(score);
-    	System.out.println(round.score + "----2"); 
-		round.setTotalScore(round.getTotalScore()+ score);
-		int nbRound = round.getNbRound();
-		 
+		
+		Round oldRound = dao.getRoundDao().getByNameAndGame(game, round.getTeam());
+		
+		
+		if (oldRound!= null) {
+			
+			round.setTotalScore(oldRound.getTotalScore() + score);
+			round.setNbRound(oldRound.getNbRound()+1);
+		}else {
+			round.setTotalScore( score);
+		}
+		
 		
 		if(round.getTotalScore() == 50) {
 			 game.setTeamWinner(round.getTeam());
@@ -58,6 +68,8 @@ public class Main extends HttpServlet {
 		
 		if(round.getScore() == 0) {
 			round.setCountZero(round.getCountZero()+1);
+		}else {
+			round.setCountZero(0);
 		}
 		
 		if(round.getCountZero() == 3) {
@@ -65,92 +77,30 @@ public class Main extends HttpServlet {
 			round.setTotalScore(0);
 		}
 			
-			//send db 
-			
-			
-		if(game.getTeam1().getName().equals(round.getTeam().getName())) {
-			round = new Round(team2, game, 0, 0,nbRound+1, 0 );
-		}else if(game.getTeam2().getName().equals(round.getTeam().getName())) {
-			round = new Round(team1, game, 0, 0,nbRound+1, 0 );
-		}
-			
-	     
-			
-			
-		if(!team1.getIsTurn()) {
-			team1.setScore(team1.getScore()+score) ;
-			
-			team1.setTurn(team1.getTurn()+1);
-			if (score == 0){
-			 	team1.setCountZero(team1.getCountZero()+1);
-			 }
-
-			 if (team1.getCountZero() == 3){
-				 team1.setScore(0);
-				 team1.setCountZero(0);
-			 }
-		}else if (!team2.getIsTurn()) {
-			team2.setScore(team2.getScore()+score);
-			team2.setTurn(team2.getTurn()+1);
-			if (score == 0){
-			 	team2.setCountZero(team2.getCountZero()+1);
-			 }
-
-			 if (team2.getCountZero() == 3){
-				 team2.setScore(0);
-				 team2.setCountZero(0);
-			 }
+		
+		
+		dao.getRoundDao().create(round);
+		
+		request.setAttribute("roundOld", round);
+		
+		Team team = round.getTeam();
+		
+		if(game.getTeam1().getName() == team.getName()) {
+			team = game.getTeam2();
+		}else {
+			team = game.getTeam1();
 		}
 		
-		if(team1.getScore() >50) {
-			team1.setScore(team1.getScore() - 25 );
-		}else if(team1.getScore()  == 50) {
-			team1.setIsWinner(true);
-			System.out.println("gagnant1");
+		round = dao.getRoundDao().getByNameAndGame(game, team);
 			
-			session.setAttribute("team1", team1);
-			session.setAttribute("team2", team2);
-			
-			this.getServletContext().getRequestDispatcher("/WEB-INF/result.jsp").forward(request, response);
-		}
 		
-		if(team2.getScore() >50) {
-			team2.setScore(team2.getScore() - 25 );
-		}else if(team2.getScore()  == 50) {
-			team2.setIsWinner(true);
-			
-			session.setAttribute("team1", team1);
-			session.setAttribute("team2", team2);
-			
-			this.getServletContext().getRequestDispatcher("/WEB-INF/result.jsp").forward(request, response);
-			
+		if(round == null) {
+			round = new Round(team, game, 0, 0,0, 0 );
 		}
+			
+		round.setNbRound(round.getNbRound()+1);
+			
 		
-		if(request.getParameter("finish") != null ) {
-			if(team1.getScore()>team2.getScore()) {
-				team1.setIsWinner(true);
-				session.setAttribute("team1", team1);
-				session.setAttribute("team2", team2);
-				
-				this.getServletContext().getRequestDispatcher("/WEB-INF/result.jsp").forward(request, response);
-			}
-			else if(team1.getScore()<team2.getScore()){
-				team2.setIsWinner(true);
-				session.setAttribute("team1", team1);
-				session.setAttribute("team2", team2);
-				
-				this.getServletContext().getRequestDispatcher("/WEB-INF/result.jsp").forward(request, response);
-			}
-			else {
-				session.setAttribute("team1", team1);
-				session.setAttribute("team2", team2);
-				
-				this.getServletContext().getRequestDispatcher("/WEB-INF/result.jsp").forward(request, response);
-			}
-		}
-		
-		session.setAttribute("team1", team1);    //�a renvoie � la Servlet l'attribut team1
-		session.setAttribute("team2", team2);
 		session.setAttribute("round", round);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/main.jsp").forward(request, response);
 	

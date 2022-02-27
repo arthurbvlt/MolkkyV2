@@ -2,6 +2,7 @@ package com.octest.beans;
 
 public class Round {
 
+	public int id;
 	public Team team;
 	public Game game;
 	public int score;
@@ -21,6 +22,18 @@ public class Round {
 	}
 	
 	
+	public Round(int id, Team team, Game game, int score, int totalScore, int nbRound, int countZero) {
+		super();
+		this.id = id;
+		this.team = team;
+		this.game = game;
+		this.score = score;
+		this.totalScore = totalScore;
+		this.nbRound = nbRound;
+		this.countZero = countZero;
+	}
+
+
 	public Round() {
 		super();
 	}
@@ -83,6 +96,16 @@ public class Round {
 
 	public void setCountZero(int countZero) {
 		this.countZero = countZero;
+	}
+
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	
