@@ -8,9 +8,9 @@ public class Round {
 	public int totalScore;
 	public int nbRound;
 	public int countZero;
+	public int id;
 	
-	
-	public Round(Team team, Game game, int score, int totalScore, int nbRound, int countZero) {
+	public Round(int id, Team team, Game game, int score, int totalScore, int nbRound, int countZero) {
 		super();
 		this.team = team;
 		this.game = game;

@@ -81,9 +81,7 @@ public class Teams extends HttpServlet {
 					game.setId(idGame);
 
 					Round round = new Round(team1, game, 0, 0, 1, 0);
-					
-					dao.getRoundDao().create(round);
-					
+										
 					team1.setIsTurn(true);
 					  	
 			        session.setAttribute("team1", team1);

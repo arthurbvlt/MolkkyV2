@@ -15,7 +15,10 @@
 		<c:out value="Equipe 1 :  ${ sessionScope.round.team.name }"></c:out>
 	</h2>
 	<h4>
-		<c:out value="Score  :  ${ sessionScope.round.score }"></c:out>
+		<c:out value="Score  :  ${ sessionScope.round.totalScore }"></c:out>
+	</h4>
+	<h4>
+		<c:out value="id  :  ${ sessionScope.round.team.id}"></c:out>
 	</h4>
 	<h4>
 		<c:out value="Turn  :  ${ sessionScope.round.nbRound}"></c:out>
