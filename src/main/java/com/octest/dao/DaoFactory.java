@@ -17,13 +17,13 @@ public class DaoFactory {
 
     public static DaoFactory getInstance() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
 
         }
-
+        System.out.println("oi");
         DaoFactory instance = new DaoFactory(
-                "jdbc:mysql://localhost:3306/molkkyv2", "root", "");   // changement de mdp et id pour se connecter Zara ! 
+                "jdbc:mysql://localhost:3306/molkkyv2", "root", "root");   // changement de mdp et id pour se connecter Zara ! 
         return instance;
     }
 

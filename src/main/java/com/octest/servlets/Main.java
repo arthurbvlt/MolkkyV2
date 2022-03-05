@@ -95,7 +95,11 @@ public class Main extends HttpServlet {
 			
 		
 		if(round == null) {
+<<<<<<< HEAD
 			round = new Round(team, game, 0, 0,0, 0);
+=======
+			round = new Round(team, game, 0, 0,0, 0 );
+>>>>>>> 88aa85bd8d5f8c006b05b4acbba443d18e7676d1
 		}
 			
 		round.setNbRound(round.getNbRound()+1);

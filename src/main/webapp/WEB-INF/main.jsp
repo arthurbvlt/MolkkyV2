@@ -12,8 +12,9 @@
 <body>
 	<p>Lets play!</p>
 	<h2>
-		<c:out value="Equipe 1 :  ${ sessionScope.round.team.name }"></c:out>
+		<c:out value="Equipe à jouer :  ${ sessionScope.round.team.name }"></c:out>
 	</h2>
+<<<<<<< HEAD
 	<h4>
 		<c:out value="Score  :  ${ sessionScope.round.totalScore }"></c:out>
 	</h4>
@@ -21,9 +22,24 @@
 		<c:out value="id  :  ${ sessionScope.round.team.id}"></c:out>
 	</h4>
 	<h4>
+=======
+	<h2>
+		<c:out value="Score  :  ${ sessionScope.round.totalScore }"></c:out>
+	</h2>
+	<h2>
+>>>>>>> 88aa85bd8d5f8c006b05b4acbba443d18e7676d1
 		<c:out value="Turn  :  ${ sessionScope.round.nbRound}"></c:out>
-	</h4>
+	</h2>
 	
+	<h4>
+		<c:out value="Equipe :  ${ roundOld.team.name }"></c:out>
+	</h4>
+	<h4>
+		<c:out value="Score  :  ${ roundOld.totalScore }"></c:out>
+	</h4>
+	<h4>
+		<c:out value="Turn  :  ${ roundOld.nbRound}"></c:out>
+	</h4>
 		
 		<form  action="${pageContext.request.contextPath}/main"method="post">
 				
