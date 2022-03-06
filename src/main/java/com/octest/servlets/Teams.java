@@ -72,7 +72,7 @@ public class Teams extends HttpServlet {
 					
 					String code = generateCode(20);
 					
-					Game game = new Game(team1, team2, null, false, code);
+					Game game = new Game(team1, team2, null, code);
 					
 					dao.getGameDao().create(game);
 					
@@ -85,13 +85,9 @@ public class Teams extends HttpServlet {
 					Round roundOld = new Round(team2, game, 0, 0,1, 0);
 			
 					Round round = new Round(team1, game, 0, 0, 1, 0);
-<<<<<<< HEAD
-										
-=======
 					
 					//dao.getRoundDao().create(round);
 					
->>>>>>> 88aa85bd8d5f8c006b05b4acbba443d18e7676d1
 					team1.setIsTurn(true);
 					  	
 			        session.setAttribute("team1", team1);

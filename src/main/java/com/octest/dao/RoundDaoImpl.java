@@ -41,7 +41,7 @@ public class RoundDaoImpl implements RoundDao{
 	}
 
 	@Override
-	public Round getByNameAndGame(Game game, Team team) {
+	public Round getLastByNameAndGame(Game game, Team team) {
 		// TODO Auto-generated method stub
 		
 		//SELECT id FROM your_table WHERE id = (SELECT MAX(id) FROM your_table)
@@ -68,6 +68,50 @@ public class RoundDaoImpl implements RoundDao{
         		   int id = result.getInt("id");
                    int score = result.getInt("score");
                    int nbRound = result.getInt("nbRound");
+                   int countZero = result.getInt("countZero");
+                   int totalScore = result.getInt("totalScore");
+                   
+                   
+                   Round round = new Round(id, team, game, score, totalScore, nbRound, countZero);
+                
+            	   return round;
+
+              
+           }else {
+        	   return null;
+           }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+		return null;
+	}
+	
+	
+	@Override
+	public Round getByNameAndGameAndNbRound(Game game, Team team, int nbRound) {
+
+		Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet result = null;
+
+        try {
+        	 
+        	connection = daoFactory.getConnection();
+        	preparedStatement = connection.prepareStatement("SELECT * "
+        			+ "FROM round "
+        			+ "WHERE currentTeamId = ? AND gameId = ? AND nbRound = ?;");
+        	preparedStatement.setInt(1, team.getId());
+        	preparedStatement.setInt(2, game.getId());  
+        	preparedStatement.setInt(3, nbRound);  
+
+        	
+        	result =  preparedStatement.executeQuery();
+            // TODO deal with the idEstablishment
+
+        	if(result.next()) {
+        	   
+        		   int id = result.getInt("id");
+                   int score = result.getInt("score");
                    int countZero = result.getInt("countZero");
                    int totalScore = result.getInt("totalScore");
                    

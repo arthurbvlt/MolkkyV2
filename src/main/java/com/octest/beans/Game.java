@@ -6,16 +6,14 @@ public class Game {
 	public Team team1;
 	public Team team2;
 	public Team teamWinner;
-	public boolean isOver;
 	public String code;
 	
 	
-	public Game(Team team1, Team team2, Team teamWinner,boolean isOver, String code) {
+	public Game(Team team1, Team team2, Team teamWinner, String code) {
 		super();
 		this.team1 = team1;
 		this.team2 = team2;
 		this.teamWinner = teamWinner;
-		this.isOver = isOver;
 		this.code = code;
 	}
 	
@@ -24,13 +22,12 @@ public class Game {
 
 
 
-	public Game(int id, Team team1, Team team2, Team teamWinner, boolean isOver, String code) {
+	public Game(int id, Team team1, Team team2, Team teamWinner, String code) {
 		super();
 		this.id = id;
 		this.team1 = team1;
 		this.team2 = team2;
 		this.teamWinner = teamWinner;
-		this.isOver = isOver;
 		this.code = code;
 	}
 
@@ -59,14 +56,6 @@ public class Game {
 	public void setTeamWinner(Team teamWinner) {
 		this.teamWinner = teamWinner;
 	}
-	
-	public boolean getIsOver() {
-		return isOver;
-	}
-	public void setIsOver(boolean isOver) {
-		this.isOver = isOver;
-	}
-
 
 	public int getId() {
 		return id;

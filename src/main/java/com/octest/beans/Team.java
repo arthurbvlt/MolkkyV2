@@ -44,6 +44,12 @@ public class Team {
 		this.isTurn = isTurn;
 		this.countZero = countZero;
 	}
+	
+	public Team(int id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
 
 
 

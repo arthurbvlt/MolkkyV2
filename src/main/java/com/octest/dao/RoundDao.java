@@ -8,6 +8,7 @@ public interface RoundDao {
 	
 	void create(Round round);
 	
-	Round getByNameAndGame(Game game, Team team);
+	Round getLastByNameAndGame(Game game, Team team);
+	Round getByNameAndGameAndNbRound(Game game, Team team, int nbRound);
 
 }

@@ -48,7 +48,7 @@ public class Main extends HttpServlet {
      	//new 
 		round.setScore(score);
 		
-		Round oldRound = dao.getRoundDao().getByNameAndGame(game, round.getTeam());
+		Round oldRound = dao.getRoundDao().getLastByNameAndGame(game, round.getTeam());
 		
 		
 		if (oldRound!= null) {
@@ -62,6 +62,14 @@ public class Main extends HttpServlet {
 		
 		if(round.getTotalScore() == 50) {
 			 game.setTeamWinner(round.getTeam());
+			 dao.getGameDao().putAWinner(game.getTeamWinner().getId());
+			 System.out.println("gagnant: " + game.getTeamWinner().getName());
+			 session.setAttribute("team1", team1);
+			 session.setAttribute("team2", team2);
+             session.setAttribute("round", round);
+             session.setAttribute("oldRound", oldRound);
+	
+			 this.getServletContext().getRequestDispatcher("/WEB-INF/result.jsp").forward(request, response);
 		}else if (round.getTotalScore() > 50) {
 			round.setTotalScore(round.getTotalScore()-25);
 		}
@@ -81,7 +89,7 @@ public class Main extends HttpServlet {
 		
 		dao.getRoundDao().create(round);
 		
-		request.setAttribute("roundOld", round);
+		request.setAttribute("roundOld", round); // à quoi ce truc sert ???
 		
 		Team team = round.getTeam();
 		
@@ -91,20 +99,16 @@ public class Main extends HttpServlet {
 			team = game.getTeam1();
 		}
 		
-		round = dao.getRoundDao().getByNameAndGame(game, team);
+		round = dao.getRoundDao().getLastByNameAndGame(game, team);
 			
 		
 		if(round == null) {
-<<<<<<< HEAD
-			round = new Round(team, game, 0, 0,0, 0);
-=======
-			round = new Round(team, game, 0, 0,0, 0 );
->>>>>>> 88aa85bd8d5f8c006b05b4acbba443d18e7676d1
+			round = new Round(team, game, 0, 0,0, 0);	
 		}
 			
 		round.setNbRound(round.getNbRound()+1);
 			
-		
+	    System.out.println("on passe ici");
 		session.setAttribute("round", round);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/main.jsp").forward(request, response);
 	

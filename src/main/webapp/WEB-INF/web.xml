@@ -43,6 +43,15 @@
 		<servlet-name>Result</servlet-name> 
 		<url-pattern>/result</url-pattern> 
 	</servlet-mapping> 
+	
+	<servlet> 
+		<servlet-name>Historical</servlet-name> 
+		<servlet-class>com.octest.servlets.Historical</servlet-class> 
+	</servlet> 
+		<servlet-mapping> 
+		<servlet-name>Historical</servlet-name> 
+		<url-pattern>/historical</url-pattern> 
+	</servlet-mapping> 
   
   <jsp-config>
       <jsp-property-group>

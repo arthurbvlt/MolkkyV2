@@ -86,5 +86,36 @@ public class TeamDaoImpl implements TeamDao {
         }
 		return null;
 	}
+	
+	@Override
+	public Team getTeamById(int id) {
+		Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet result = null;
+
+        try {
+        	 
+        	connection = daoFactory.getConnection();
+        	preparedStatement = connection.prepareStatement("SELECT * "
+        			+ "FROM team "
+        			+ "WHERE id = ? ;");
+        	preparedStatement.setInt(1, id);  
+        	
+        	result =  preparedStatement.executeQuery();
+
+           if(result.next()) {
+               String name = result.getString("name");
+
+               Team team = new Team(id, name);
+               
+        	   return team;
+           }else {
+        	   return null;
+           }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+		return null;
+	}
 
 }

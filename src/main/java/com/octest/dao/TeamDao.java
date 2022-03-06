@@ -9,4 +9,6 @@ public interface TeamDao {
     List<Team> lister();
     
     Integer getIdByName(String name);
+	Team getTeamById(int id);
+
 }
