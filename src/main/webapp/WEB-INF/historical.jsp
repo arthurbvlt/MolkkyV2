@@ -15,9 +15,9 @@
 <body>
 	<p> Historique de ce match : </p>
 	
-	<c:forEach items="${ sessionScope.roundsT1 }" var="round">
-		<p>Round <c:out value="${ round.nbRound }"/></p>
-		<p>Score de l'équipe <c:out value="${ sessionScope.game.team1.name} : ${ round.score}"></c:out></p>
+	<c:forEach var="i" begin="0" end="${sessionScope.roundsT1.size()}" step="1">
+		<p>Round <c:out value="${ sessionScope.roundsT1.get(i).nbRound }"/></p>
+		<p>Score de l'équipe <c:out value="${ sessionScope.game.team1.name} : ${ sessionScope.roundsT1.get(i).score}"></c:out></p>
 	</c:forEach>
 	<c:forEach items="${ sessionScope.roundsT2 }" var="round">
 		<p>Round <c:out value="${ round.nbRound }"/></p>

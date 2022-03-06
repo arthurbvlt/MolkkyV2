@@ -37,7 +37,19 @@ public class GameDaoImpl implements GameDao{
 	            preparedStatement.executeUpdate();
 	        } catch (SQLException e) {
 	            e.printStackTrace();
-	        }
+	        }finally {
+				try {
+					if (preparedStatement != null) {
+						preparedStatement.close();
+					}
+					if (connexion != null) {
+						connexion.close();
+					}
+
+				}catch (Exception e) {
+					// throw new DaoException("Message d'erreur :" + e.getMessage());
+				}
+			}
 
 		
 	}
@@ -86,7 +98,22 @@ public class GameDaoImpl implements GameDao{
            }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }finally {
+			try {
+				if (result != null) {
+					result.close();
+				}
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+
+			}catch (Exception e) {
+				// throw new DaoException("Message d'erreur :" + e.getMessage());
+			}
+		}
 		return null;
 	}	
 	

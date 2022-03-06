@@ -58,7 +58,7 @@
 			<input type="button" class="button"  value="Back home" onclick="window.location.href='/test/teams';" />
 			<input type="button" class="button"  value="Historical" onclick="window.location.href='/test/historical';" />
 			
-	</div>
+	</div> 
 	
 </body>
 

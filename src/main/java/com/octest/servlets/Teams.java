@@ -98,7 +98,8 @@ public class Teams extends HttpServlet {
 			        request.setAttribute("isSame", false);
 			        request.setAttribute("roundOld", roundOld);
 			        
-					this.getServletContext().getRequestDispatcher("/WEB-INF/main.jsp").forward(request, response);
+//					this.getServletContext().getRequestDispatcher("/WEB-INF/main.jsp").forward(request, response);
+			        response.sendRedirect("/test/main");
 				}
 				else {	
 			        request.setAttribute("isSame", true);
