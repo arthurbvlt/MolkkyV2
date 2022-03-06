@@ -48,13 +48,13 @@ public class Main extends HttpServlet {
      	//new 
 		round.setScore(score);
 		
-		Round oldRound = dao.getRoundDao().getLastByNameAndGame(game, round.getTeam());
+		Round roundOld = dao.getRoundDao().getLastByNameAndGame(game, round.getTeam());
 		
 		
-		if (oldRound!= null) {
+		if (roundOld!= null) {
 			
-			round.setTotalScore(oldRound.getTotalScore() + score);
-			round.setNbRound(oldRound.getNbRound()+1);
+			round.setTotalScore(roundOld.getTotalScore() + score);
+			round.setNbRound(roundOld.getNbRound()+1);
 		}else {
 			round.setTotalScore( score);
 		}
@@ -67,7 +67,7 @@ public class Main extends HttpServlet {
 			 session.setAttribute("team1", team1);
 			 session.setAttribute("team2", team2);
              session.setAttribute("round", round);
-             session.setAttribute("oldRound", oldRound);
+             session.setAttribute("roundOld", roundOld);
 	
 			 this.getServletContext().getRequestDispatcher("/WEB-INF/result.jsp").forward(request, response);
 		}else if (round.getTotalScore() > 50) {
@@ -89,7 +89,7 @@ public class Main extends HttpServlet {
 		
 		dao.getRoundDao().create(round);
 		
-		request.setAttribute("roundOld", round); // à quoi ce truc sert ???
+		request.setAttribute("roundOld", round); // ï¿½ quoi ce truc sert ???
 		
 		Team team = round.getTeam();
 		
