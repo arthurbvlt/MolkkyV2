@@ -27,12 +27,14 @@ public class Result extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	System.out.println("oh yeah");
     	this.getServletContext().getRequestDispatcher("/WEB-INF/result.jsp").forward(request, response);
     }
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	
+    	System.out.println("oh yeah");
+
 		HttpSession session = request.getSession();
 		
 		Team team1 = (Team) session.getAttribute("team1");
@@ -47,7 +49,6 @@ public class Result extends HttpServlet {
 	    int nbRoundTotal = round.getNbRound();
 	    ArrayList<Round> roundsT1 = new ArrayList<Round>();
 	    ArrayList<Round> roundsT2 = new ArrayList<Round>();
-
 	    for(int nb = 1; nb<=nbRoundTotal; nb++) {
 	    	System.out.println(nb);	    	
 	    	roundsT1.add(dao.getRoundDao().getByNameAndGameAndNbRound(game, game.getTeam1(), nb));

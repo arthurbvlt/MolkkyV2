@@ -53,14 +53,14 @@ public class Main extends HttpServlet {
 		
 		if (oldRound!= null) {
 			
-			round.setTotalScore(oldRound.getTotalScore() + score);
+			round.setTotalScore(oldRound.getTotalScore() + score );  //pour faire des tests j'ai mis à 50 ne pas oublier d'enlever
 			round.setNbRound(oldRound.getNbRound()+1);
 		}else {
 			round.setTotalScore( score);
 		}
 		
 		
-		if(round.getTotalScore() == 50) {
+		if(round.getTotalScore() == 10) {
 			 game.setTeamWinner(round.getTeam());
 			 dao.getGameDao().putAWinner(game.getTeamWinner().getId());
 			 System.out.println("gagnant: " + game.getTeamWinner().getName());
@@ -69,48 +69,57 @@ public class Main extends HttpServlet {
              session.setAttribute("round", round);
              session.setAttribute("oldRound", oldRound);
 	
-			 this.getServletContext().getRequestDispatcher("/WEB-INF/result.jsp").forward(request, response);
-		}else if (round.getTotalScore() > 50) {
-			round.setTotalScore(round.getTotalScore()-25);
+//			 this.getServletContext().getRequestDispatcher("/WEB-INF/result.jsp").forward(request, response);
+			 
+
+			 response.sendRedirect("/test/result");
+
 		}
 		
-		if(round.getScore() == 0) {
-			round.setCountZero(round.getCountZero()+1);
-		}else {
-			round.setCountZero(0);
-		}
-		
-		if(round.getCountZero() == 3) {
-			round.setCountZero(0);
-			round.setTotalScore(0);
-		}
+		else {
+			if (round.getTotalScore() > 50) {
+				round.setTotalScore(round.getTotalScore()-25);
+			}
 			
-		
-		
-		dao.getRoundDao().create(round);
-		
-		request.setAttribute("roundOld", round); // à quoi ce truc sert ???
-		
-		Team team = round.getTeam();
-		
-		if(game.getTeam1().getName() == team.getName()) {
-			team = game.getTeam2();
-		}else {
-			team = game.getTeam1();
+			if(round.getScore() == 0) {
+				round.setCountZero(round.getCountZero()+1);
+			}else {
+				round.setCountZero(0);
+			}
+			
+			if(round.getCountZero() == 3) {
+				round.setCountZero(0);
+				round.setTotalScore(0);
+			}
+				
+			
+			
+			dao.getRoundDao().create(round);
+			
+//			request.setAttribute("roundOld", round); // à quoi ce truc sert ???
+			
+			Team team = round.getTeam();
+			
+			if(game.getTeam1().getName() == team.getName()) {
+				team = game.getTeam2();
+			}else {
+				team = game.getTeam1();
+			}
+			
+			round = dao.getRoundDao().getLastByNameAndGame(game, team);
+				
+			
+			if(round == null) {
+				round = new Round(team, game, 0, 0,0, 0);	
+			}
+				
+			round.setNbRound(round.getNbRound()+1);
+				
+		    System.out.println("on passe ici");
+			session.setAttribute("round", round);
+			this.getServletContext().getRequestDispatcher("/WEB-INF/main.jsp").forward(request, response);
 		}
 		
-		round = dao.getRoundDao().getLastByNameAndGame(game, team);
-			
-		
-		if(round == null) {
-			round = new Round(team, game, 0, 0,0, 0);	
-		}
-			
-		round.setNbRound(round.getNbRound()+1);
-			
-	    System.out.println("on passe ici");
-		session.setAttribute("round", round);
-		this.getServletContext().getRequestDispatcher("/WEB-INF/main.jsp").forward(request, response);
 	
     }
  

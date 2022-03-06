@@ -37,7 +37,7 @@
 				 	style="color: #0000FF"
 					</c:if>
 				>
-					<c:out value="Looser :  ${ sessionScope.game.teamWinner.equals(sessionScope.game.team1) ? sessionScope.game.team1.name : sessionScope.game.team2.name }"></c:out>
+					<c:out value="Looser :  ${ sessionScope.game.teamWinner.equals(sessionScope.game.team1) ? sessionScope.game.team2.name : sessionScope.game.team1.name }"></c:out>
 				</h2>
 				<h4>
 					<c:out value="Score :  ${ sessionScope.team1.isWinner ? sessionScope.team2.score : sessionScope.team1.score }"></c:out>
@@ -58,7 +58,7 @@
 			<input type="button" class="button"  value="Back home" onclick="window.location.href='/test/teams';" />
 			<input type="button" class="button"  value="Historical" onclick="window.location.href='/test/historical';" />
 			
-	</div>
+	</div> 
 	
 </body>
 
