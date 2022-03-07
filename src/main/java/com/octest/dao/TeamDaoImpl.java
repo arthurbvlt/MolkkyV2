@@ -34,8 +34,8 @@ public class TeamDaoImpl implements TeamDao {
     }
 
     @Override
-    public List<Team> lister() {
-        List<Team> teams = new ArrayList<Team>();
+    public List<String> lister() {
+        List<String> names = new ArrayList<String>();
         Connection connexion = null;
         Statement statement = null;
         ResultSet resultat = null;
@@ -48,15 +48,13 @@ public class TeamDaoImpl implements TeamDao {
             while (resultat.next()) {
                 String name = resultat.getString("name");
 
-                Team team = new Team(name);
-        
 
-                teams.add(team);
+                names.add(name);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return teams;
+        return names;
     }
 
 	@Override
