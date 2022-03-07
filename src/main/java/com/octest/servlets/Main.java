@@ -37,8 +37,8 @@ public class Main extends HttpServlet {
 		Team team1 = (Team) session.getAttribute("team1");
 		Team team2 = (Team) session.getAttribute("team2");
 
-		Round round = (Round) session.getAttribute("roundOld");
-//		Round roundOld = (Round) session.getAttribute("roundOld");
+		Round round = (Round) session.getAttribute("round");
+		Round roundOld = (Round) session.getAttribute("roundOld");
 
 		Game game = round.getGame();
 
@@ -49,13 +49,13 @@ public class Main extends HttpServlet {
 		// new
 		round.setScore(score);
 
-		Round roundOld = dao.getRoundDao().getLastByNameAndGame(game, round.getTeam());
+		Round roundLast = dao.getRoundDao().getLastByNameAndGame(game, round.getTeam());
 		
-//		System.out.println("score du roundOld : " + roundOld.getTotalScore());
+//		System.out.println("score du roundLast : " + roundOld.getTotalScore());
 
-		if (roundOld != null) {
-			round.setTotalScore(roundOld.getTotalScore() + score);
-			round.setNbRound(roundOld.getNbRound() + 1);
+		if (roundLast != null) {
+			round.setTotalScore(roundLast.getTotalScore() + score);
+			round.setNbRound(roundLast.getNbRound() + 1);
 		} else {
 			round.setTotalScore(score);
 		}
@@ -77,7 +77,7 @@ public class Main extends HttpServlet {
 
 		dao.getRoundDao().create(round);
 
-		request.setAttribute("roundOld", round); 
+		session.setAttribute("roundOld", round); 
 		
 		if (round.getTotalScore() == 10) {
 			
@@ -85,7 +85,7 @@ public class Main extends HttpServlet {
 			game.setTeamWinner(round.getTeam());
 			dao.getGameDao().putAWinner(game.getId(), game.getTeamWinner().getId());
 //			if (game.getTeamWinner().equals(team1)) {
-//				session.setAttribute("roundOld", dao.getRoundDao().getLastByNameAndGame(game, team2));
+//				session.setAttribute("roundLast", dao.getRoundDao().getLastByNameAndGame(game, team2));
 //				System.out.println("score du roundOld equipe looser : " + dao.getRoundDao().getLastByNameAndGame(game, team2).getTotalScore());
 //			}
 //			else {
@@ -97,7 +97,7 @@ public class Main extends HttpServlet {
 			session.setAttribute("round", round);
 			session.setAttribute("roundOld", roundOld);
 
-//			 this.getServletContext().getRequestDispatcher("/WEB-INF/result.jsp").forward(request, response);
+//			this.getServletContext().getRequestDispatcher("/WEB-INF/result.jsp").forward(request, response);
 
 			response.sendRedirect("/test/result");
 
