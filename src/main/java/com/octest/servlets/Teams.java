@@ -52,11 +52,13 @@ public class Teams extends HttpServlet {
 		
     	HttpSession session = request.getSession();
 
+    	DaoFactory dao = DaoFactory.getInstance();
+    	
 		if(request.getParameter("teams") != null ) {
 			if( !"".equals(request.getParameter("team1")) && !"".equals(request.getParameter("team2"))) {
 				if(!request.getParameter("team1").equals(request.getParameter("team2"))) {
 					
-					DaoFactory dao = DaoFactory.getInstance();
+					
 					
 					
 					Team team1 = new Team(request.getParameter("team1").toString());
@@ -159,6 +161,7 @@ public class Teams extends HttpServlet {
 				}  
 				
 		
+			dao.getTeamDao().ajouter(names);
 			session.setAttribute("names", names);
 			this.getServletContext().getRequestDispatcher("/WEB-INF/csv.jsp").forward(request, response);
 			   
