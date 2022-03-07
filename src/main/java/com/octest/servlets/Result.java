@@ -52,7 +52,6 @@ public class Result extends HttpServlet {
 	    List<Round> roundsT1 = dao.getRoundDao().getByTeamAndGame(team1, game);
 	    List<Round> roundsT2 = dao.getRoundDao().getByTeamAndGame(team2, game);
 	    
-	    System.out.println(roundsT1.size());
 	    
 	    /*for(int nb = 1; nb<=nbRoundTotal; nb++) {
 	    		    	

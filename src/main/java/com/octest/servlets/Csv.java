@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.octest.beans.Team;
+import com.octest.dao.DaoFactory;
 
 
 @WebServlet("/Csv")
@@ -27,9 +28,30 @@ public class Csv extends HttpServlet {
 		
 			if(!request.getParameter("select1").toString().equals(request.getParameter("select2").toString())) {
 				
-				Team team1 = new Team(request.getParameter("select1"));
-				Team team2 = new Team(request.getParameter("select2"));
+				DaoFactory dao = DaoFactory.getInstance();
+				
 		        
+				Team team1 = new Team(request.getParameter("select1").toString());
+				Team team2 = new Team(request.getParameter("select2").toString());
+				
+				Integer idTeam1 = dao.getTeamDao().getIdByName(team1.getName());
+				Integer idTeam2 = dao.getTeamDao().getIdByName(team2.getName());
+				
+				if(idTeam1 == null) {
+					dao.getTeamDao().ajouter(team1);
+					 idTeam1 = dao.getTeamDao().getIdByName(team1.getName());
+					team1.setId(idTeam1);
+				}else {
+					team1.setId(idTeam1);
+				}
+				
+				if(idTeam2 == null) {
+					dao.getTeamDao().ajouter(team2);
+					idTeam2 = dao.getTeamDao().getIdByName(team2.getName());
+					team2.setId(idTeam2);
+				}else {
+					team2.setId(idTeam2);
+				}
 				
 				request.setAttribute("isSame", false);
 				team1.setIsTurn(true);
