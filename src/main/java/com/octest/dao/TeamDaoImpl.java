@@ -2,7 +2,9 @@ package com.octest.dao;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
 
 import com.octest.beans.Team;
 
@@ -116,6 +118,29 @@ public class TeamDaoImpl implements TeamDao {
             e.printStackTrace();
         }
 		return null;
+	}
+
+	@Override
+	public void ajouter(List<String> names) {
+		Connection connexion = null;
+	        PreparedStatement preparedStatement = null;
+	        Iterator<String> it = names.iterator();
+
+	        try {
+	            connexion = daoFactory.getConnection();
+	            preparedStatement = connexion.prepareStatement("INSERT INTO team(name) VALUES(?);");
+	           
+	            while(it.hasNext()) {
+	            	String name = it.next();
+	            	 preparedStatement.setString(1, name);
+	            	 preparedStatement.addBatch();
+	            }
+	           
+	            preparedStatement.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+		
 	}
 
 }
