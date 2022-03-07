@@ -37,7 +37,8 @@ public class Main extends HttpServlet {
 		Team team1 = (Team) session.getAttribute("team1");
 		Team team2 = (Team) session.getAttribute("team2");
 
-		Round round = (Round) session.getAttribute("round");
+		Round round = (Round) session.getAttribute("roundOld");
+//		Round roundOld = (Round) session.getAttribute("roundOld");
 
 		Game game = round.getGame();
 
@@ -49,6 +50,8 @@ public class Main extends HttpServlet {
 		round.setScore(score);
 
 		Round roundOld = dao.getRoundDao().getLastByNameAndGame(game, round.getTeam());
+		
+//		System.out.println("score du roundOld : " + roundOld.getTotalScore());
 
 		if (roundOld != null) {
 			round.setTotalScore(roundOld.getTotalScore() + score);
@@ -81,7 +84,14 @@ public class Main extends HttpServlet {
 			
 			game.setTeamWinner(round.getTeam());
 			dao.getGameDao().putAWinner(game.getId(), game.getTeamWinner().getId());
-			System.out.println("gagnant: " + game.getTeamWinner().getName());
+//			if (game.getTeamWinner().equals(team1)) {
+//				session.setAttribute("roundOld", dao.getRoundDao().getLastByNameAndGame(game, team2));
+//				System.out.println("score du roundOld equipe looser : " + dao.getRoundDao().getLastByNameAndGame(game, team2).getTotalScore());
+//			}
+//			else {
+//				session.setAttribute("roundOld", dao.getRoundDao().getLastByNameAndGame(game, team1));
+//				System.out.println("score du roundOld equipe looser : " + dao.getRoundDao().getLastByNameAndGame(game, team1).getTotalScore());
+//			}
 			session.setAttribute("team1", team1);
 			session.setAttribute("team2", team2);
 			session.setAttribute("round", round);

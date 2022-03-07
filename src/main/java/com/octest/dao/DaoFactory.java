@@ -23,7 +23,7 @@ public class DaoFactory {
         }
         System.out.println("oi");
         DaoFactory instance = new DaoFactory(
-                "jdbc:mysql://localhost:3306/molkkyv2", "root", "root");   // changement de mdp et id pour se connecter Zara ! 
+                "jdbc:mysql://localhost:3306/molkkyv2", "root", "");   // changement de mdp et id pour se connecter Zara ! 
         return instance;
     }
 

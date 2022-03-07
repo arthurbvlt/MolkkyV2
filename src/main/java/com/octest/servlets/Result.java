@@ -28,13 +28,43 @@ public class Result extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	System.out.println("oh yeah");
-    	this.getServletContext().getRequestDispatcher("/WEB-INF/result.jsp").forward(request, response);
+    	
+    	HttpSession session = request.getSession();
+		
+		Team team1 = (Team) session.getAttribute("team1");
+	    Team team2 = (Team) session.getAttribute("team2");
+	    
+		Round round = (Round) session.getAttribute("round");    	
+		
+		Game game = round.getGame();
+	    
+	    DaoFactory dao = DaoFactory.getInstance();
+	    
+	    
+	    int nbRoundTotal = round.getNbRound();
+	    
+	    List<Round> roundsT1 = dao.getRoundDao().getByTeamAndGame(team1, game);
+	    List<Round> roundsT2 = dao.getRoundDao().getByTeamAndGame(team2, game);
+	    
+	    System.out.println(roundsT1.size());
+	    
+        session.setAttribute("roundsT1", roundsT1);
+        session.setAttribute("roundsT2", roundsT2);
+	    
+        
+    	if( request.getParameter("Back Home") != null) {  
+			this.getServletContext().getRequestDispatcher("/WEB-INF/teams.jsp").forward(request, response);
+    	}
+    	if( request.getParameter("Historical")!= null) {
+			this.getServletContext().getRequestDispatcher("/WEB-INF/historical.jsp").forward(request, response);
+    	}
+		
+		this.getServletContext().getRequestDispatcher("/WEB-INF/result.jsp").forward(request, response);
+    	
     }
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	System.out.println("oh yeah");
 
 		HttpSession session = request.getSession();
 		
@@ -42,10 +72,12 @@ public class Result extends HttpServlet {
 	    Team team2 = (Team) session.getAttribute("team2");
 	    
 		Round round = (Round) session.getAttribute("round");
-		 
+//		Round roundOld = (Round) session.getAttribute("roundOld");
+		
 		Game game = round.getGame();
 	    
 	    DaoFactory dao = DaoFactory.getInstance();
+	    
 	    
 	    int nbRoundTotal = round.getNbRound();
 	    

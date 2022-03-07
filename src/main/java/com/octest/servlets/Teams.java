@@ -107,7 +107,7 @@ public class Teams extends HttpServlet {
 			        session.setAttribute("round", round);
 			        
 			        request.setAttribute("isSame", false);
-			        request.setAttribute("roundOld", roundOld);
+			        session.setAttribute("roundOld", roundOld);
 			        
 //					this.getServletContext().getRequestDispatcher("/WEB-INF/main.jsp").forward(request, response);
 			        response.sendRedirect("/test/main");
