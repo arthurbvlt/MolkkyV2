@@ -8,7 +8,7 @@ public interface TeamDao {
     void ajouter( Team team );
     
     void ajouter(List<String> name);
-    List<Team> lister();
+    List<String> lister();
     
     Integer getIdByName(String name);
 	Team getTeamById(int id);

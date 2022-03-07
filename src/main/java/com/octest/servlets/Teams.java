@@ -160,8 +160,15 @@ public class Teams extends HttpServlet {
 				e.printStackTrace();  
 				}  
 				
-		
-			dao.getTeamDao().ajouter(names);
+			List<String> teamNamesDb = dao.getTeamDao().lister();
+			List<String> uniqueNames = new ArrayList<>();
+			
+			for (String name : names) {
+			    if (!teamNamesDb.contains(name)) {
+			    	uniqueNames.add(name);
+			    } 
+			}
+			dao.getTeamDao().ajouter(uniqueNames);
 			session.setAttribute("names", names);
 			this.getServletContext().getRequestDispatcher("/WEB-INF/csv.jsp").forward(request, response);
 			   
