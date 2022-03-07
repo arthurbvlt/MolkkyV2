@@ -26,9 +26,12 @@ public class Csv extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 			if(!request.getParameter("select1").toString().equals(request.getParameter("select2").toString())) {
+				
 				Team team1 = new Team(request.getParameter("select1"));
 				Team team2 = new Team(request.getParameter("select2"));
-		        request.setAttribute("isSame", false);
+		        
+				
+				request.setAttribute("isSame", false);
 				team1.setIsTurn(true);
 				  
 		        HttpSession session = request.getSession();

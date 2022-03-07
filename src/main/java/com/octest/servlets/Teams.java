@@ -56,19 +56,30 @@ public class Teams extends HttpServlet {
 			if( !"".equals(request.getParameter("team1")) && !"".equals(request.getParameter("team2"))) {
 				if(!request.getParameter("team1").equals(request.getParameter("team2"))) {
 					
+					DaoFactory dao = DaoFactory.getInstance();
+					
+					
 					Team team1 = new Team(request.getParameter("team1").toString());
 					Team team2 = new Team(request.getParameter("team2").toString());
 					
-					DaoFactory dao = DaoFactory.getInstance();
+					Integer idTeam1 = dao.getTeamDao().getIdByName(team1.getName());
+					Integer idTeam2 = dao.getTeamDao().getIdByName(team2.getName());
 					
-					dao.getTeamDao().ajouter(team1);
-					dao.getTeamDao().ajouter(team2);
+					if(idTeam1 == null) {
+						dao.getTeamDao().ajouter(team1);
+						 idTeam1 = dao.getTeamDao().getIdByName(team1.getName());
+						team1.setId(idTeam1);
+					}else {
+						team1.setId(idTeam1);
+					}
 					
-					Integer id1 = dao.getTeamDao().getIdByName(team1.getName());
-					Integer id2 = dao.getTeamDao().getIdByName(team2.getName());
-					
-					team1.setId(id1);
-					team2.setId(id2);
+					if(idTeam2 == null) {
+						dao.getTeamDao().ajouter(team2);
+						idTeam2 = dao.getTeamDao().getIdByName(team2.getName());
+						team2.setId(idTeam2);
+					}else {
+						team2.setId(idTeam2);
+					}
 					
 					String code = generateCode(20);
 					

@@ -3,6 +3,7 @@ package com.octest.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -47,15 +48,22 @@ public class Result extends HttpServlet {
 	    DaoFactory dao = DaoFactory.getInstance();
 	    
 	    int nbRoundTotal = round.getNbRound();
-	    ArrayList<Round> roundsT1 = new ArrayList<Round>();
-	    ArrayList<Round> roundsT2 = new ArrayList<Round>();
-	    for(int nb = 1; nb<=nbRoundTotal; nb++) {
-	    	System.out.println(nb);	    	
+	    
+	    List<Round> roundsT1 = dao.getRoundDao().getByTeamAndGame(team1, game);
+	    List<Round> roundsT2 = dao.getRoundDao().getByTeamAndGame(team2, game);
+	    
+	    System.out.println(roundsT1.size());
+	    
+	    /*for(int nb = 1; nb<=nbRoundTotal; nb++) {
+	    		    	
 	    	roundsT1.add(dao.getRoundDao().getByNameAndGameAndNbRound(game, game.getTeam1(), nb));
+	    	System.out.println(roundsT1.size());
 	    }
 	    for(int nb = 1; nb<=nbRoundTotal; nb++) {
 	    	roundsT2.add(dao.getRoundDao().getByNameAndGameAndNbRound(game, game.getTeam2(), nb));
-	    }	    
+	    }	*/
+	    
+	    
         session.setAttribute("roundsT1", roundsT1);
         session.setAttribute("roundsT2", roundsT2);
 	    

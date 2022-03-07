@@ -55,14 +55,16 @@ public class GameDaoImpl implements GameDao{
 	}
 	
 	@Override
-	public void putAWinner(int id) {
+	public void putAWinner(int gameid, int teamid) {
 		  Connection connexion = null;
 	        PreparedStatement preparedStatement = null;
 
 	        try {
 	            connexion = daoFactory.getConnection();
-	            preparedStatement = connexion.prepareStatement("INSERT INTO game(teamWinnerId) VALUES(?);");
-	            preparedStatement.setInt(1, id);
+	            preparedStatement = connexion.prepareStatement("UPDATE  game SET teamWinnerId =  ? "
+	            		+ "WHERE game.id = ? ;");
+	            preparedStatement.setInt(1, teamid);
+	            preparedStatement.setInt(2, gameid);
 
 	            preparedStatement.executeUpdate();
 	        } catch (SQLException e) {

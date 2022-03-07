@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.octest.beans.Game;
 import com.octest.beans.Round;
@@ -129,5 +131,51 @@ public class RoundDaoImpl implements RoundDao{
         }
 		return null;
 	}
+
+	@Override
+	public List<Round> getByTeamAndGame(Team team, Game game) {
+
+		Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet result = null;
+        List<Round> rounds = new ArrayList<Round>();
+
+        try {
+        	 
+        	connection = daoFactory.getConnection();
+        	preparedStatement = connection.prepareStatement("SELECT * "
+        			+ "FROM round "
+        			+ "WHERE currentTeamId = ? AND gameId = ? ORDER BY nbRound ASC;");
+        	preparedStatement.setInt(1, team.getId());
+        	preparedStatement.setInt(2, game.getId());  
+
+        	
+        	result =  preparedStatement.executeQuery();
+            // TODO deal with the idEstablishment
+
+        	if(result.next()) {
+        	   
+        		   int id = result.getInt("id");
+                   int score = result.getInt("score");
+                   int countZero = result.getInt("countZero");
+                   int totalScore = result.getInt("totalScore");
+                   int nbRound = result.getInt("nbRound");
+                   
+                   
+                   Round round = new Round(id, team, game, score, totalScore, nbRound, countZero);
+                
+                   rounds.add(round);
+                   
+           }
+        	
+        	return rounds;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+		return null;
+	}
+	
+
+
 	
 }
