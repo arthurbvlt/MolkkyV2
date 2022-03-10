@@ -134,7 +134,7 @@ public class TeamDaoImpl implements TeamDao {
 	            	 preparedStatement.addBatch();
 	            }
 	           
-	            preparedStatement.executeUpdate();
+	            preparedStatement.executeBatch();
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }

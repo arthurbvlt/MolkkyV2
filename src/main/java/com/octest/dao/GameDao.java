@@ -1,6 +1,7 @@
 package com.octest.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.octest.beans.Game;
 
@@ -10,6 +11,6 @@ public interface GameDao {
 	void putAWinner(int gameid, int teamid);
 	
 	Integer getIdByCode(String code);
-	ArrayList<Game> getGamesByTeamId(int id);
+	List<Game> getGamesByTeamId(int id);
 
 }

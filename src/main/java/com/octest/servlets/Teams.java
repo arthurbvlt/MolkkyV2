@@ -161,10 +161,12 @@ public class Teams extends HttpServlet {
 				}  
 				
 			List<String> teamNamesDb = dao.getTeamDao().lister();
+			System.out.println(teamNamesDb.size());
 			List<String> uniqueNames = new ArrayList<>();
 			
 			for (String name : names) {
 			    if (!teamNamesDb.contains(name)) {
+					System.out.println("ca rentre");
 			    	uniqueNames.add(name);
 			    } 
 			}

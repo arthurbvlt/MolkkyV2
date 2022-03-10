@@ -1,17 +1,23 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 
+
+/* 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-items: center; */
 *{
 	box-sizing: border-box
 }
 body{
-	font-family: 'Poppins', sans-serif;
-	font-size: 30px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	min-height: 100vh;
-	background-color: white
+	margin: 5em 0em 0em 20em;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    display: inline-block;
+    min-height: 100vh;
+    background-color: white;
 }
 #score{
 	margin-left: 32px;
@@ -38,6 +44,18 @@ input[name="score"] {
 
 .button:hover {
   transform: scale(1.1);
+}
+.bg1{
+	padding: 10px;
+    border-radius: 6px;	
+}
+.bg2{
+	position: absolute;
+	margin-left: 17em;
+    top: 5em;
+    border-radius: 6px;	
+	padding: 10px 38px 10px 38px;
+	z-index: -1;	
 }
 
 </style>

@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.octest.beans.Game;
+import com.octest.beans.Round;
 import com.octest.beans.Team;
 import com.octest.dao.DaoFactory;
 
@@ -26,6 +28,8 @@ public class Csv extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+			HttpSession session = request.getSession();
+
 			if(!request.getParameter("select1").toString().equals(request.getParameter("select2").toString())) {
 				
 				DaoFactory dao = DaoFactory.getInstance();
@@ -53,25 +57,68 @@ public class Csv extends HttpServlet {
 					team2.setId(idTeam2);
 				}
 				
-				request.setAttribute("isSame", false);
+				String code = generateCode(20);
+				
+				Game game = new Game(team1, team2, null, code);
+				
+				dao.getGameDao().create(game);
+				
+				Integer idGame = dao.getGameDao().getIdByCode(game.code);
+				
+				game.setId(idGame);
+				
+				
+				
+				Round roundOld = new Round(team2, game, 0, 0,1, 0);
+		
+				Round round = new Round(team1, game, 0, 0, 1, 0);
+				
+				//dao.getRoundDao().create(round);
+				
 				team1.setIsTurn(true);
-				  
-		        HttpSession session = request.getSession();
-
+				  	
 		        session.setAttribute("team1", team1);
 		        session.setAttribute("team2", team2);
-				
-		        this.getServletContext().getRequestDispatcher("/WEB-INF/main.jsp").forward(request, response);
+		        session.setAttribute("game", game);
+		        session.setAttribute("round", round);
+		        
+		        request.setAttribute("isSame", false);
+		        session.setAttribute("roundOld", roundOld);
+		        
+//				this.getServletContext().getRequestDispatcher("/WEB-INF/main.jsp").forward(request, response);
+		        response.sendRedirect("/test/main");				
 			}
 			else {	
 		        request.setAttribute("isSame", true);
 				this.getServletContext().getRequestDispatcher("/WEB-INF/csv.jsp").forward(request, response);
 			}
-			
-			
-		
-		
-		
+				
 	}
 
+	public String generateCode(int n)
+    {
+  
+        // chose a Character random from this String
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                    + "0123456789"
+                                    + "abcdefghijklmnopqrstuvxyz";
+  
+        // create StringBuffer size of AlphaNumericString
+        StringBuilder sb = new StringBuilder(n);
+  
+        for (int i = 0; i < n; i++) {
+  
+            // generate a random number between
+            // 0 to AlphaNumericString variable length
+            int index
+                = (int)(AlphaNumericString.length()
+                        * Math.random());
+  
+            // add Character one by one in end of sb
+            sb.append(AlphaNumericString
+                          .charAt(index));
+        }
+  
+        return sb.toString();
+    }
 }

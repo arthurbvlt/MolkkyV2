@@ -99,7 +99,7 @@ public class GameDaoImpl implements GameDao{
         	   return null;
            }
         } catch (SQLException e) {
-            e.printStackTrace();
+//			throw new DaoException("Impossible de communiquer avec la base de données");
         }finally {
 			try {
 				if (result != null) {
@@ -112,8 +112,8 @@ public class GameDaoImpl implements GameDao{
 					connection.close();
 				}
 
-			}catch (Exception e) {
-				// throw new DaoException("Message d'erreur :" + e.getMessage());
+			}catch (SQLException e) {
+//				throw new DaoException("Message d'erreur :" + e.getMessage());
 			}
 		}
 		return null;
@@ -121,12 +121,12 @@ public class GameDaoImpl implements GameDao{
 	
 	
 	@Override
-	public ArrayList<Game> getGamesByTeamId(int id) {
+	public List<Game> getGamesByTeamId(int id) {
 
 		Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet result = null;
-        ArrayList<Game> games = new ArrayList<Game>();
+        List<Game> games = new ArrayList<Game>();	
  	   	Team teamWinner; 
 
         try {
@@ -164,7 +164,7 @@ public class GameDaoImpl implements GameDao{
                    games.add(game);
         	}
         } catch (SQLException e) {
-            e.printStackTrace();
+//			throw new DaoException("Message d'erreur :" + e.getMessage());
         }
 		return games;
 	}

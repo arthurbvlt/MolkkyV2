@@ -45,11 +45,14 @@ public class Result extends HttpServlet {
 	    
 	    List<Round> roundsT1 = dao.getRoundDao().getByTeamAndGame(team1, game);
 	    List<Round> roundsT2 = dao.getRoundDao().getByTeamAndGame(team2, game);
-	    
-	    System.out.println(roundsT1.size());
-	    
+	    	    
+	    List<Game>  gamesT1 = dao.getGameDao().getGamesByTeamId(team1.getId());
+	    List<Game>  gamesT2 = dao.getGameDao().getGamesByTeamId(team2.getId());
+
         session.setAttribute("roundsT1", roundsT1);
         session.setAttribute("roundsT2", roundsT2);
+        session.setAttribute("gamesT1", gamesT1);
+        session.setAttribute("gamesT2", gamesT2);
 	    
         
     	if( request.getParameter("Back Home") != null) {  
@@ -65,46 +68,6 @@ public class Result extends HttpServlet {
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		HttpSession session = request.getSession();
-		
-		Team team1 = (Team) session.getAttribute("team1");
-	    Team team2 = (Team) session.getAttribute("team2");
-	    
-		Round round = (Round) session.getAttribute("round");
-//		Round roundOld = (Round) session.getAttribute("roundOld");
-		
-		Game game = round.getGame();
-	    
-	    DaoFactory dao = DaoFactory.getInstance();
-	    
-	    
-	    int nbRoundTotal = round.getNbRound();
-	    
-	    List<Round> roundsT1 = dao.getRoundDao().getByTeamAndGame(team1, game);
-	    List<Round> roundsT2 = dao.getRoundDao().getByTeamAndGame(team2, game);
-	    
-	    
-	    /*for(int nb = 1; nb<=nbRoundTotal; nb++) {
-	    		    	
-	    	roundsT1.add(dao.getRoundDao().getByNameAndGameAndNbRound(game, game.getTeam1(), nb));
-	    	System.out.println(roundsT1.size());
-	    }
-	    for(int nb = 1; nb<=nbRoundTotal; nb++) {
-	    	roundsT2.add(dao.getRoundDao().getByNameAndGameAndNbRound(game, game.getTeam2(), nb));
-	    }	*/
-	    
-	    
-        session.setAttribute("roundsT1", roundsT1);
-        session.setAttribute("roundsT2", roundsT2);
-	    
-        
-    	if(!request.getParameter("Back Home").equals(null)) {  
-			this.getServletContext().getRequestDispatcher("/WEB-INF/teams.jsp").forward(request, response);
-    	}
-    	if(!request.getParameter("Historical").equals(null)) {
-			this.getServletContext().getRequestDispatcher("/WEB-INF/historical.jsp").forward(request, response);
-    	}
     }
  
 }
