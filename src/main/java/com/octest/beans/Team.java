@@ -4,14 +4,10 @@ public class Team {
 	
 	protected int id;
 	protected String name;
-	protected int turn;
-	protected boolean isTurn; 
 	
 	public Team(String name) {
 		super();
 		this.name = name;
-		this.turn = 1;
-		this.isTurn = false;
 	}
 	public Team(int id, String name) {
 		super();
@@ -29,18 +25,6 @@ public class Team {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public int getTurn() {
-		return turn;
-	}
-	public void setTurn(int turn) {
-		this.turn = turn;
-	}
-	public boolean getIsTurn() {
-		return isTurn;
-	}
-	public void setIsTurn(boolean isTurn) {
-		this.isTurn = isTurn;
 	}
 	
 

@@ -76,7 +76,7 @@ public class Main extends HttpServlet {
 
 		session.setAttribute("roundOld", round); 
 		
-		if (round.getTotalScore() == 10) {
+		if (round.getTotalScore() == 50) {
 			
 			
 			game.setTeamWinner(round.getTeam());
