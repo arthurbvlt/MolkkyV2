@@ -99,10 +99,6 @@ public class Teams extends HttpServlet {
 					Round roundOld = new Round(team2, game, 0, 0,1, 0);
 			
 					Round round = new Round(team1, game, 0, 0, 1, 0);
-					
-					//dao.getRoundDao().create(round);
-					
-					team1.setIsTurn(true);
 					  	
 			        session.setAttribute("team1", team1);
 			        session.setAttribute("team2", team2);
@@ -110,9 +106,8 @@ public class Teams extends HttpServlet {
 			        session.setAttribute("round", round);
 			        
 			        request.setAttribute("isSame", false);
-			        request.setAttribute("roundOld", roundOld);
+			        session.setAttribute("roundOld", roundOld);
 			        
-//					this.getServletContext().getRequestDispatcher("/WEB-INF/main.jsp").forward(request, response);
 			        response.sendRedirect("/test/main");
 				}
 				else {	
@@ -176,7 +171,6 @@ public class Teams extends HttpServlet {
 		}
 		else {
 			if(getNomFichier(request.getPart("file")) == "") {
-				System.out.println(getNomFichier(request.getPart("file"))+1);
 			}
 			this.getServletContext().getRequestDispatcher("/WEB-INF/teams.jsp").forward(request, response);
 		}

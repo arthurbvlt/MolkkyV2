@@ -38,6 +38,7 @@ public class Main extends HttpServlet {
 		Team team2 = (Team) session.getAttribute("team2");
 
 		Round round = (Round) session.getAttribute("round");
+		Round roundOld = (Round) session.getAttribute("roundOld");
 
 		Game game = round.getGame();
 
@@ -45,14 +46,13 @@ public class Main extends HttpServlet {
 
 		DaoFactory dao = DaoFactory.getInstance();
 
-		// new
 		round.setScore(score);
 
-		Round roundOld = dao.getRoundDao().getLastByNameAndGame(game, round.getTeam());
-
-		if (roundOld != null) {
-			round.setTotalScore(roundOld.getTotalScore() + score);
-			round.setNbRound(roundOld.getNbRound() + 1);
+		Round roundLast = dao.getRoundDao().getLastByNameAndGame(game, round.getTeam());
+		
+		if (roundLast != null) {
+			round.setTotalScore(roundLast.getTotalScore() + score);
+			round.setNbRound(roundLast.getNbRound() + 1);
 		} else {
 			round.setTotalScore(score);
 		}
@@ -74,20 +74,18 @@ public class Main extends HttpServlet {
 
 		dao.getRoundDao().create(round);
 
-		request.setAttribute("roundOld", round); 
+		session.setAttribute("roundOld", round); 
 		
-		if (round.getTotalScore() == 10) {
+		if (round.getTotalScore() == 50) {
 			
 			
 			game.setTeamWinner(round.getTeam());
 			dao.getGameDao().putAWinner(game.getId(), game.getTeamWinner().getId());
-			System.out.println("gagnant: " + game.getTeamWinner().getName());
+
 			session.setAttribute("team1", team1);
 			session.setAttribute("team2", team2);
 			session.setAttribute("round", round);
 			session.setAttribute("roundOld", roundOld);
-
-//			 this.getServletContext().getRequestDispatcher("/WEB-INF/result.jsp").forward(request, response);
 
 			response.sendRedirect("/test/result");
 
@@ -114,7 +112,6 @@ public class Main extends HttpServlet {
 
 
 
-			System.out.println("on passe ici");
 			session.setAttribute("round", round);
 			this.getServletContext().getRequestDispatcher("/WEB-INF/main.jsp").forward(request, response);
 		}

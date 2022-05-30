@@ -153,7 +153,7 @@ public class RoundDaoImpl implements RoundDao{
         	result =  preparedStatement.executeQuery();
             // TODO deal with the idEstablishment
 
-        	if(result.next()) {
+        	while(result.next()) {
         	   
         		   int id = result.getInt("id");
                    int score = result.getInt("score");
@@ -166,13 +166,11 @@ public class RoundDaoImpl implements RoundDao{
                 
                    rounds.add(round);
                    
-           }
-        	
-        	return rounds;
+           }        	
         } catch (SQLException e) {
             e.printStackTrace();
         }
-		return null;
+    	return rounds;
 	}
 	
 

@@ -14,7 +14,7 @@
 
 <body>
 	<div align="center">
-		<h1 style="line-height: 3.5em;">Game Molkky Version 1 !</h1>
+		<h1 style="line-height: 3.5em;">Game Molkky Version 2 !</h1>
 		<c:if test= "${ isSame == true}"> 
 			<h4 style="color:red">Please enter a different name for each team !</h4>
 		</c:if>
